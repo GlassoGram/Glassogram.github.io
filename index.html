@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>GLASSOGRAM | Перенаправление</title>
+    <title>GLASSOGRAM | Переход и Android App</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none; /* небольшая деталь: при долгом удержании не выделяется текст */
         }
 
         body {
@@ -32,7 +31,7 @@
             height: 180%;
             top: -40%;
             left: -40%;
-            background: radial-gradient(circle at 30% 20%, rgba(255, 80, 120, 0.2), rgba(0, 30, 60, 0) 70%);
+            background: radial-gradient(circle at 30% 20%, rgba(255, 80, 120, 0.15), rgba(0, 30, 60, 0) 70%);
             pointer-events: none;
             z-index: 0;
         }
@@ -44,7 +43,7 @@
             border-radius: 3.5rem;
             padding: 2.5rem 2rem;
             width: 100%;
-            max-width: 550px;
+            max-width: 580px;
             box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
             text-align: center;
@@ -57,23 +56,8 @@
             box-shadow: 0 30px 55px rgba(0, 0, 0, 0.5);
         }
 
-        /* логотип / иконка */
-        .logo-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            display: inline-block;
-            filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.3));
-            animation: gentleFloat 3s infinite ease-in-out;
-        }
-
-        @keyframes gentleFloat {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
-            100% { transform: translateY(0px); }
-        }
-
         h1 {
-            font-size: 2rem;
+            font-size: 2.2rem;
             font-weight: 700;
             background: linear-gradient(135deg, #FFFFFF, #c0ccf0);
             background-clip: text;
@@ -102,7 +86,7 @@
             background: linear-gradient(105deg, #ff4d6d, #ff1e4d);
             border: none;
             padding: 1rem 2.2rem;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 700;
             font-family: inherit;
             color: white;
@@ -110,9 +94,8 @@
             cursor: pointer;
             transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             box-shadow: 0 15px 25px -8px rgba(255, 30, 77, 0.4);
-            margin: 1.2rem 0 1.8rem;
+            margin: 1rem 0 1rem;
             letter-spacing: 0.5px;
-            backdrop-filter: blur(2px);
             width: auto;
             min-width: 260px;
         }
@@ -128,12 +111,55 @@
             transition: 0.05s;
         }
 
+        /* кнопка для андроид (второстепенная) */
+        .android-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(30, 40, 60, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 0.85rem 1.8rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            font-family: inherit;
+            color: #e0ecff;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 0.8rem 0 0.5rem;
+            width: auto;
+            min-width: 240px;
+            backdrop-filter: blur(4px);
+        }
+
+        .android-btn:hover {
+            background: rgba(50, 65, 95, 0.95);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .android-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* разделитель */
+        .divider {
+            margin: 1.2rem 0 0.8rem;
+            width: 80px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            display: inline-block;
+        }
+
         /* таймер-блок */
         .timer-container {
             background: rgba(0, 0, 0, 0.4);
             border-radius: 100px;
             padding: 0.75rem 1.2rem;
-            margin: 1rem 0 0.5rem;
+            margin: 1.2rem 0 0.5rem;
             display: inline-flex;
             align-items: baseline;
             gap: 10px;
@@ -166,12 +192,12 @@
         }
 
         .info-note {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: #8d9dd6;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 30px;
             padding: 6px 14px;
-            margin-top: 1.8rem;
+            margin-top: 1.5rem;
             display: inline-block;
         }
 
@@ -186,22 +212,25 @@
                 padding: 0.8rem 1.5rem;
                 min-width: 220px;
             }
+            .android-btn {
+                font-size: 1rem;
+                padding: 0.7rem 1.3rem;
+                min-width: 200px;
+            }
             .timer-number {
                 font-size: 1.6rem;
                 min-width: 65px;
             }
             h1 {
-                font-size: 1.7rem;
+                font-size: 1.8rem;
             }
         }
 
-        /* предотвращает мерцание при нажатии */
-        .glasso-btn:focus-visible {
+        .glasso-btn:focus-visible, .android-btn:focus-visible {
             outline: 2px solid white;
             outline-offset: 3px;
         }
 
-        /* спиннер/статус (при необходимости незаметно) */
         .hidden-redirect-msg {
             position: fixed;
             bottom: 20px;
@@ -216,96 +245,127 @@
             z-index: 99;
             font-family: monospace;
         }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: default;
+            transform: none;
+        }
     </style>
 </head>
 <body>
 
 <div class="glass-panel">
-    <div class="logo-icon">
-        
-    </div>
     <h1>GLASSOGRAM</h1>
-    <div class="sub">социальная сеть жоская</div>
+    <div class="sub">социальная сеть нового света</div>
 
     <!-- Главная кнопка перенаправления -->
     <button class="glasso-btn" id="redirectBtn">
-         ПЕРЕЙТИ В GLASSOGRAM 
+        ПЕРЕЙТИ В GLASSOGRAM
+    </button>
+
+    <!-- разделитель -->
+    <div class="divider"></div>
+
+    <!-- Кнопка скачивания Android приложения -->
+    <button class="android-btn" id="downloadAndroidBtn">
+        Скачать приложение для Android
     </button>
 
     <!-- Отображение обратного таймера -->
     <div class="timer-container">
-        <span class="timer-label"> Авто-переход через</span>
+        <span class="timer-label">Авто-переход через</span>
         <span class="timer-number" id="countdownDisplay">22</span>
         <span class="seconds-text">сек</span>
     </div>
     <div class="info-note">
-         Нажмите кнопку или подождите 22 секунды — вы будете перенаправлены
+        Нажмите кнопку или подождите 22 секунды — вы будете перенаправлены
     </div>
 </div>
 
-<!-- необязательный вспомогательный элемент (для отладки/эстетики) -->
+<!-- вспомогательный элемент для статуса -->
 <div class="hidden-redirect-msg" id="statusMsg">
-    ✓ готово к переходу
+    готово к переходу
 </div>
 
 <script>
     (function() {
-        // Целевой URL (перенаправление)
+        // Целевой URL для основного перенаправления
         const TARGET_URL = "https://glasso-gram-social-network--gipnorobloxman.replit.app/";
+        // URL для скачивания Android приложения
+        const ANDROID_DOWNLOAD_URL = "https://workupload.com/file/dPnBPStV4pZ";
         
         // Переменные состояния
-        let countdown = 22;              // начальное значение таймера (секунд)
-        let timerId = null;              // идентификатор интервала
-        let isRedirected = false;        // флаг, чтобы избежать многократного перенаправления
-        let userClicked = false;         // опционально, но влияет на отмену авто-перехода
+        let countdown = 22;
+        let timerId = null;
+        let isRedirected = false;
+        let userClicked = false;
         
         // DOM элементы
         const btn = document.getElementById('redirectBtn');
+        const androidBtn = document.getElementById('downloadAndroidBtn');
         const countdownSpan = document.getElementById('countdownDisplay');
         const statusMsgDiv = document.getElementById('statusMsg');
         
-        // Функция, которая выполняет перенаправление (с проверкой флага)
+        // Функция, которая выполняет перенаправление на основной URL
         function performRedirect() {
-            if (isRedirected) return;     // уже был переход или идёт
+            if (isRedirected) return;
             
             isRedirected = true;
             
-            // Остановить таймер, если он ещё активен
             if (timerId) {
                 clearInterval(timerId);
                 timerId = null;
             }
             
-            // Небольшая визуальная обратная связь (чтобы пользователь понял)
             if (statusMsgDiv) {
-                statusMsgDiv.textContent = "⟳ Перенаправление...";
+                statusMsgDiv.textContent = "Перенаправление...";
                 statusMsgDiv.style.background = "#ff4d6daa";
                 statusMsgDiv.style.color = "white";
             }
             
-            // Изменяем кнопку, делаем её неактивной на время (эстетика)
             if (btn) {
                 btn.disabled = true;
                 btn.style.opacity = "0.7";
                 btn.style.cursor = "default";
-                btn.textContent = " ПЕРЕХОД... ";
+                btn.textContent = "ПЕРЕХОД...";
             }
             
-            // Выполняем переход на целевой URL
-            // Используем window.location.replace, чтобы не создавать историю (или assign)
-            // Важно: задержка в 0ms, но для лучшей визуализации можно сделать мгновенно
+            if (androidBtn) {
+                androidBtn.disabled = true;
+                androidBtn.style.opacity = "0.6";
+                androidBtn.style.cursor = "default";
+            }
+            
             window.location.href = TARGET_URL;
         }
         
-        // Обновление отображения таймера и уменьшение счетчика
+        // Функция для скачивания Android приложения (открытие ссылки в новой вкладке)
+        function performAndroidDownload() {
+            if (isRedirected) return;
+            
+            // Открываем ссылку на скачивание в новой вкладке, чтобы не мешать основному таймеру
+            window.open(ANDROID_DOWNLOAD_URL, '_blank');
+            
+            if (statusMsgDiv) {
+                statusMsgDiv.textContent = "Ссылка на скачивание открыта";
+                statusMsgDiv.style.background = "#2a5f3eaa";
+                setTimeout(() => {
+                    if (statusMsgDiv && !isRedirected) {
+                        statusMsgDiv.textContent = "готово к переходу";
+                        statusMsgDiv.style.background = "#000000aa";
+                    }
+                }, 2000);
+            }
+        }
+        
+        // Обновление отображения таймера
         function updateTimerDisplay() {
             if (countdownSpan) {
                 countdownSpan.textContent = countdown;
             }
             
-            // Если таймер дошел до нуля и ещё не было перенаправления
             if (countdown <= 0 && !isRedirected && !userClicked) {
-                // Останавливаем интервал, чтобы избежать повторных вызовов
                 if (timerId) {
                     clearInterval(timerId);
                     timerId = null;
@@ -314,18 +374,16 @@
             }
         }
         
-        // Функция, которая запускает обратный отсчет (если не нажато)
+        // Запуск обратного отсчета
         function startCountdown() {
             if (timerId) {
                 clearInterval(timerId);
                 timerId = null;
             }
             
-            // Если уже пользователь нажал, не запускаем авто-переход (счетчик не нужен)
             if (userClicked || isRedirected) return;
             
             timerId = setInterval(function() {
-                // Если уже был клик или перенаправление — останавливаем таймер
                 if (userClicked || isRedirected) {
                     if (timerId) {
                         clearInterval(timerId);
@@ -334,12 +392,10 @@
                     return;
                 }
                 
-                // Уменьшаем счетчик, если больше нуля
                 if (countdown > 0) {
                     countdown--;
                     updateTimerDisplay();
                 } else {
-                    // Когда счетчик становится 0, вызываем перенаправление
                     if (timerId) {
                         clearInterval(timerId);
                         timerId = null;
@@ -351,42 +407,36 @@
             }, 1000);
         }
         
-        // Обработчик клика по кнопке
+        // Обработчик клика по основной кнопке
         function onButtonClick() {
-            // Если уже был переход или кнопка заблокирована
             if (isRedirected) return;
             
-            // Помечаем, что пользователь совершил действие (отменяем авто-переход)
             userClicked = true;
             
-            // Останавливаем любой активный таймер (авто-переход больше не нужен)
             if (timerId) {
                 clearInterval(timerId);
                 timerId = null;
             }
             
-            // Меняем внешний вид таймера (чтобы показать отмену авто)
             if (countdownSpan) {
-                countdownSpan.textContent = "🚀";
+                countdownSpan.textContent = "0";
             }
-            const timerContainerText = document.querySelector('.timer-label');
-            if (timerContainerText) {
-                timerContainerText.innerHTML = "✨ Ручной переход ✨";
+            
+            const timerLabel = document.querySelector('.timer-label');
+            if (timerLabel) {
+                timerLabel.innerHTML = "Ручной переход";
             }
+            
             const secondsSpan = document.querySelector('.seconds-text');
             if (secondsSpan) {
                 secondsSpan.textContent = "";
             }
             
-            // Дополнительный эффект: сообщение в статусе
             if (statusMsgDiv) {
-                statusMsgDiv.textContent = "🔘 Нажато! Перенаправляем...";
+                statusMsgDiv.textContent = "Нажато! Перенаправляем...";
                 statusMsgDiv.style.background = "#1e3c72aa";
             }
             
-            // И непосредственно перенаправление (с задержкой в 50мс для плавности анимации кнопки)
-            // Но чтобы не тормозить, можно сразу вызывать performRedirect, но с microtask или setTimeout
-            // Лучше дать браузеру перерисовать состояние кнопки, но перенаправление будет быстрым.
             setTimeout(() => {
                 if (!isRedirected) {
                     performRedirect();
@@ -394,46 +444,40 @@
             }, 50);
         }
         
-        // Добавляем слушатель события на кнопку
+        // Обработчик для кнопки Android (скачивание)
+        function onAndroidClick() {
+            if (isRedirected) return;
+            performAndroidDownload();
+        }
+        
+        // Добавляем слушатели
         if (btn) {
             btn.addEventListener('click', onButtonClick);
         }
         
-        // Инициализация: отображаем начальное значение 22 секунды
-        updateTimerDisplay();
-        
-        // Запускаем обратный отсчет (авто-перенаправление)
-        startCountdown();
-        
-        // Дополнительная защита: если пользователь как-то перезагрузил страницу или перешел в бэкграунд,
-        // таймер будет жить нормально. Но также обработаем видимость страницы (опционально)
-        // При скрытии вкладки setInterval немного замедляется, но точность не критична — переход всё равно произойдет.
-        // Доп. элегантность: если вдруг пользователь нажал на кнопку после окончания таймера (но флаг уже сработал) - не сработает.
-        
-        // Также на всякий случай отключаем возможность повторного клика после перенаправления (уже есть флаг)
-        // Обрабатываем крайний случай: если скрипт загрузился, и пользователь нажал на кнопку несколько раз.
-        // При первом клике userClicked = true, остальные клики не вызовут повторный переход из-за флага isRedirected.
-        
-        // Для улучшения доступности: добавим атрибут role
-        if (btn) {
-            btn.setAttribute('aria-label', 'Перейти в GLASSOGRAM, социальная сеть');
+        if (androidBtn) {
+            androidBtn.addEventListener('click', onAndroidClick);
         }
         
-        // Небольшой лог в консоль (не мешает)
-        console.log("Страница готова. Авто-переход через 22 сек. Кнопка активна.");
+        // Инициализация
+        updateTimerDisplay();
+        startCountdown();
         
-        // Доп. фича: если пользователь навел на кнопку и передумал, ничего страшного.
-        // Также очищаем таймер при выгрузке страницы (на всякий случай)
+        if (btn) {
+            btn.setAttribute('aria-label', 'Перейти в GLASSOGRAM');
+        }
+        
+        if (androidBtn) {
+            androidBtn.setAttribute('aria-label', 'Скачать приложение для Android');
+        }
+        
+        console.log("Страница готова. Авто-переход через 22 сек. Кнопки активны.");
+        
         window.addEventListener('beforeunload', function() {
             if (timerId) {
                 clearInterval(timerId);
             }
         });
-        
-        // Экстренный случай: если пользователь быстро нажал кнопку в промежутке между тиками,
-        // мы уже останавливаем таймер и инициируем переход.
-        // На случай, если таймер уже вызвал performRedirect, но клик произошел почти одновременно,
-        // performRedirect проверит isRedirected и не выполнится дважды.
     })();
 </script>
 </body>
